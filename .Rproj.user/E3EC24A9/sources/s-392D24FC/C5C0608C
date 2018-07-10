@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1530698033022.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C5C0608C",
+    "lastKnownWriteTime" : 1531196959,
+    "last_content_update" : 1531196959,
+    "path" : "C:/opt/sandbox/pbisplom/script.r",
+    "project_path" : "script.r",
+    "properties" : {
+        "cursorPosition" : "35,24",
+        "scrollLine" : "11"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

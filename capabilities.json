@@ -1,0 +1,85 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Values",
+      "kind": "GroupingOrMeasure",
+      "name": "Values"
+    },
+    {
+      "displayName": "Color",
+      "kind": "GroupingOrMeasure",
+      "name": "graphColor"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "conditions": [
+        {
+          "graphColor": {
+            "max": 1
+          }
+        }
+      ],
+      "scriptResult": {
+        "dataInput": {
+          "table": {
+            "rows": {
+              "select": [
+                {
+                  "for": {
+                    "in": "Values"
+                  }
+                }
+              ],
+              "dataReductionAlgorithm": {
+                "top": {}
+              }
+            }
+          }
+        },
+        "script": {
+          "scriptProviderDefault": "R",
+          "scriptOutputType": "png",
+          "source": {
+            "objectName": "rcv_script",
+            "propertyName": "source"
+          },
+          "provider": {
+            "objectName": "rcv_script",
+            "propertyName": "provider"
+          }
+        }
+      }
+    }
+  ],
+  "objects": {
+    "rcv_script": {
+      "properties": {
+        "provider": {
+          "type": {
+            "text": true
+          }
+        },
+        "source": {
+          "type": {
+            "scripting": {
+              "source": true
+            }
+          }
+        }
+      }
+    },
+    "SettingsEnablecolor": {
+      "displayName": "Graph Color",
+      "properties": {
+        "colorsw": {
+          "displayName": "Enable Color",
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    }
+  },
+  "suppressDefaultTitle": true
+}
