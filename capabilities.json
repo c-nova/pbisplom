@@ -1,21 +1,23 @@
 {
   "dataRoles": [
     {
-      "displayName": "Values",
+      "displayName": "値",
+      "description": "プロットする値を入力します。連続値、離散値が入力可能です",
       "kind": "GroupingOrMeasure",
       "name": "Values"
     },
     {
-      "displayName": "Color",
+      "displayName": "カラー",
+      "description": "プロットに色付けする値を入力します。離散値のみが入力可能です（15値まで）",
       "kind": "GroupingOrMeasure",
-      "name": "graphColor"
+      "name": "ColorVal"
     }
   ],
   "dataViewMappings": [
     {
       "conditions": [
         {
-          "graphColor": {
+          "ColorVal": {
             "max": 1
           }
         }
@@ -28,6 +30,11 @@
                 {
                   "for": {
                     "in": "Values"
+                  }
+                },
+                {
+                  "for": {
+                    "in": "ColorVal"
                   }
                 }
               ],
@@ -69,13 +76,223 @@
         }
       }
     },
-    "SettingsEnablecolor": {
-      "displayName": "Graph Color",
+    "PlotSettingsUpper": {
+      "displayName": "右上部分の構成",
       "properties": {
-        "colorsw": {
-          "displayName": "Enable Color",
+        "ShowSw": {
+          "displayName": "表示",
           "type": {
             "bool": true
+          }
+        },
+        "Continuous": {
+          "displayName": "連続値の扱い(自:他)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "ポイント",
+                "value": "point"
+              },
+              {
+                "displayName": "スムース",
+                "value": "smooth"
+              },
+              {
+                "displayName": "密度",
+                "value": "density"
+              },
+              {
+                "displayName": "Cor",
+                "value": "cor"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
+          }
+        },
+        "Combo": {
+          "displayName": "混合値の扱い(自:他)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "ボックス",
+                "value": "box"
+              },
+              {
+                "displayName": "ドット",
+                "value": "dot"
+              },
+              {
+                "displayName": "ファセットとヒストグラム",
+                "value": "fasethist"
+              },
+              {
+                "displayName": "ファセットと密度",
+                "value": "fasetdensity"
+              },
+              {
+                "displayName": "denstrip",
+                "value": "denstrip"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
+          }
+        },
+        "Discrete": {
+          "displayName": "離散値の扱い(自:他)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "比率",
+                "value": "ratio"
+              },
+              {
+                "displayName": "ファセットとバー",
+                "value": "facetbar"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "PlotSettingsLower": {
+      "displayName": "左下部分の構成",
+      "properties": {
+        "ShowSw": {
+          "displayName": "表示",
+          "type": {
+            "bool": true
+          }
+        },
+        "Continuous": {
+          "displayName": "連続値の扱い(自:他)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "ポイント",
+                "value": "point"
+              },
+              {
+                "displayName": "スムース",
+                "value": "smooth"
+              },
+              {
+                "displayName": "密度",
+                "value": "density"
+              },
+              {
+                "displayName": "Cor",
+                "value": "cor"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
+          }
+        },
+        "Combo": {
+          "displayName": "混合値の扱い(自:他)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "ボックス",
+                "value": "box"
+              },
+              {
+                "displayName": "ドット",
+                "value": "dot"
+              },
+              {
+                "displayName": "ファセットとヒストグラム",
+                "value": "fasethist"
+              },
+              {
+                "displayName": "ファセットと密度",
+                "value": "fasetdensity"
+              },
+              {
+                "displayName": "denstrip",
+                "value": "denstrip"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
+          }
+        },
+        "Discrete": {
+          "displayName": "離散値の扱い(自:他)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "比率",
+                "value": "ratio"
+              },
+              {
+                "displayName": "ファセットとバー",
+                "value": "facetbar"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "PlotSettingsDiag": {
+      "displayName": "中央部分の構成",
+      "properties": {
+        "ShowSw": {
+          "displayName": "表示",
+          "type": {
+            "bool": true
+          }
+        },
+        "Continuous": {
+          "displayName": "連続値の扱い(自:自)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "密度",
+                "value": "densityDiag"
+              },
+              {
+                "displayName": "バー",
+                "value": "barDiag"
+              },
+              {
+                "displayName": "なし",
+                "value": "blankDiag"
+              }
+            ]
+          }
+        },
+        "Discrete": {
+          "displayName": "離散値の扱い(自:自)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "バー",
+                "value": "barDiag"
+              },
+              {
+                "displayName": "なし",
+                "value": "blank"
+              }
+            ]
           }
         }
       }

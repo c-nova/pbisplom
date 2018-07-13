@@ -551,7 +551,9 @@ var powerbi;
                     function VisualSettings() {
                         var _this = _super !== null && _super.apply(this, arguments) || this;
                         _this.rcv_script = new RcvScriptSettings();
-                        _this.SettingsEnablecolor = new SettingsEnablecolor();
+                        _this.PlotSettingsUpper = new PlotSettingsUpper();
+                        _this.PlotSettingsLower = new PlotSettingsLower();
+                        _this.PlotSettingsDiag = new PlotSettingsDiag();
                         return _this;
                     }
                     return VisualSettings;
@@ -563,13 +565,35 @@ var powerbi;
                     return RcvScriptSettings;
                 }());
                 pbisplom05E56D040CD74B6887AE3F160D986C31.RcvScriptSettings = RcvScriptSettings;
-                var SettingsEnablecolor = (function () {
-                    function SettingsEnablecolor() {
-                        this.colorsw = false;
+                var PlotSettingsUpper = (function () {
+                    function PlotSettingsUpper() {
+                        this.ShowSw = true;
+                        this.Continuous = "point";
+                        this.Combo = "box";
+                        this.Discrete = "ratio";
                     }
-                    return SettingsEnablecolor;
+                    return PlotSettingsUpper;
                 }());
-                pbisplom05E56D040CD74B6887AE3F160D986C31.SettingsEnablecolor = SettingsEnablecolor;
+                pbisplom05E56D040CD74B6887AE3F160D986C31.PlotSettingsUpper = PlotSettingsUpper;
+                var PlotSettingsLower = (function () {
+                    function PlotSettingsLower() {
+                        this.ShowSw = true;
+                        this.Continuous = "point";
+                        this.Combo = "box";
+                        this.Discrete = "ratio";
+                    }
+                    return PlotSettingsLower;
+                }());
+                pbisplom05E56D040CD74B6887AE3F160D986C31.PlotSettingsLower = PlotSettingsLower;
+                var PlotSettingsDiag = (function () {
+                    function PlotSettingsDiag() {
+                        this.ShowSw = true;
+                        this.Continuous = "densityDiag";
+                        this.Discrete = "barDiag";
+                    }
+                    return PlotSettingsDiag;
+                }());
+                pbisplom05E56D040CD74B6887AE3F160D986C31.PlotSettingsDiag = PlotSettingsDiag;
             })(pbisplom05E56D040CD74B6887AE3F160D986C31 = visual.pbisplom05E56D040CD74B6887AE3F160D986C31 || (visual.pbisplom05E56D040CD74B6887AE3F160D986C31 = {}));
         })(visual = extensibility.visual || (extensibility.visual = {}));
     })(extensibility = powerbi.extensibility || (powerbi.extensibility = {}));

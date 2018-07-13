@@ -31,7 +31,9 @@ module powerbi.extensibility.visual.pbisplom05E56D040CD74B6887AE3F160D986C31  {
    export class VisualSettings extends DataViewObjectsParser {
     public rcv_script: RcvScriptSettings = new RcvScriptSettings();
 
-    public SettingsEnablecolor: SettingsEnablecolor = new SettingsEnablecolor();
+    public PlotSettingsUpper: PlotSettingsUpper = new PlotSettingsUpper();
+    public PlotSettingsLower: PlotSettingsLower = new PlotSettingsLower();
+    public PlotSettingsDiag: PlotSettingsDiag = new PlotSettingsDiag();
       }
 
     export class RcvScriptSettings {
@@ -40,8 +42,24 @@ module powerbi.extensibility.visual.pbisplom05E56D040CD74B6887AE3F160D986C31  {
        public source;
     }
 
-    export class SettingsEnablecolor {
-      public colorsw: boolean = false;
+    export class PlotSettingsUpper {
+      public ShowSw: boolean = true;
+      public Continuous: string = "point";
+      public Combo: string = "box";
+      public Discrete: string = "ratio";
+    }
+
+    export class PlotSettingsLower {
+      public ShowSw: boolean = true;
+      public Continuous: string = "point";
+      public Combo: string = "box";
+      public Discrete: string = "ratio";
+    }
+
+    export class PlotSettingsDiag {
+      public ShowSw: boolean = true;
+      public Continuous: string = "densityDiag";
+      public Discrete: string = "barDiag";
     }
 
 }

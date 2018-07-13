@@ -1,6 +1,6 @@
 # R における Power BI カスタムビジュアルの作成方法
 
-前回は R + Plotly の組み合わせによるカスタム ビジュアルを作成しました。これは Plotly が「R スクリプト ビジュアル」で直接コードして可視化することができないため、カスタム ビジュアルのパッケージとして作成する必要がありました。
+[前回](https://github.com/c-nova/pbipltly)は R + Plotly の組み合わせによるカスタム ビジュアルを作成しました。これは Plotly が「R スクリプト ビジュアル」で直接コードして可視化することができないため、カスタム ビジュアルのパッケージとして作成する必要がありました。
 しかし R の場合はどうでしょうか？ R の場合は「R スクリプト ビジュアル」が利用できるので、通常パッケージ化は必要ありません。ですが、これはあくまで R 言語を記述できる方が利用する場合の話であり、コーディングができない方では利用できないことに変わりはありません。また、Power BI Desktop では R スクリプトが利用できますが、現在Power BI Service では「R スクリプト ビジュアル」を利用することができません。
 そこで R スクリプトのパッケージ化が必要になります。パッケージ化を行うと、以下のような利点があります。
 
@@ -10,9 +10,9 @@
 
 今回の R でのカスタム ビジュアルは、上記の利点をフルに生かせるようなパッケージの作成方法を説明いたします。
 
-前回と同じですが、Rについての日本語での解説は [こちら](http://www.okadajp.org/RWiki/?R%E3%81%A8%E3%81%AF) のページをご覧ください。
+[前回](https://github.com/c-nova/pbipltly)と同じですが、Rについての日本語での解説は [こちら](http://www.okadajp.org/RWiki/?R%E3%81%A8%E3%81%AF) のページをご覧ください。
 
-## Power BI における R の制限事項
+## 1. Power BI における R の制限事項
 
 [このページ](https://docs.microsoft.com/ja-jp/power-bi/desktop-r-visuals#known-limitations) に詳細が記載されていますが、Power BI Desktop で R を利用する場合には以下のような制限事項があります。Desktop 版と Service 版で若干制限事項が異なるので、両方ご利用される場合には厳しい制限に合わせる必要があります。Service 版の制限事項は[こちら](https://docs.microsoft.com/ja-jp/power-bi/service-r-visuals#known-limitations)に記載されております。
 
@@ -137,20 +137,20 @@ tslint.json
 
 6. 空のレポートに対して下図にある「開発者向けビジュアル」をクリックします。
 
-<img src="img/PBIS07.png" width=160>
+<img src="img/PBIS21.png" width=160>
 
 ---
 
 7. Plotly の場合とは異なり、データは組み込まれていないので、適当なデータをビジュアルに投入します。
 
-<img src="img/PBIP12.png" width=480>
+<img src="img/PBIP21.png" width=480>
 
 これで初期動作の確認は完了です。
 
-## 5. カスタム ビジュアルの作成
+## 4. 基本的なプロット
 
 ここから R のグラフを開発します。
-前回は VCS を使用して開発を行いましたが、今回は R Studio を使用して開発を行います。R Studioは[こちら](https://www.rstudio.com/products/rstudio/download/#download)からダウンロードし、インストールしてください。
+前回は VCS を使用して開発を行いましたが、最初の R のコーディング部分は R Studio を使用して開発を行います。R Studioは[こちら](https://www.rstudio.com/products/rstudio/download/#download)からダウンロードし、インストールしてください。
 
 ---
 
@@ -167,7 +167,7 @@ plot は R のデフォルトのプロット命令です。実はこれでも SP
 
 2. ここでは「[GGally](https://ggobi.github.io/ggally/)」という SPLOM のパッケージを使用します。GGally は [The GGobi Foundation, Inc](http://ggobi.org/foundation/) という団体が作成している ggplot2 の拡張機能です。もともと [GGobi](http://ggobi.org/) 自体も高次元のデータの可視化や探索を得意とするソフトウェアであり、R で利用可能なパッケージ（rggoib）もあるのですが、こちらは GGobi と R を接続するためのパッケージでしかなく、今回の Power BI で使用方法の場合には利用することができません（別の画面が開いて実行される形式となり、Power BI ではサポートされません）。
 
-<img src="img/PBIP13.png" width=480>
+<img src="img/PBIP22.png" width=480>
 GGobiを使ったデータ可視化例
 
 以下に GGally を利用するためのコードを記載します。
@@ -213,7 +213,7 @@ print(ggp, progress = F)
 
 3. 上記のコードを R Studio で実行してみましょう。プロットの画面に以下ようなグラフが表示されます。
 
-<img src="img/PBIP14.png" width=480>
+<img src="img/PBIP23.png" width=480>
 
 ---
 
@@ -223,7 +223,7 @@ print(ggp, progress = F)
 
 上記では例として Values というデータの10個目のカラムを色付け用データとして利用しています。このデータは三段階の離散値を使用していますので、以下のような色付けになります。
 
-<img src="img/PBIP15.png" width=480>
+<img src="img/PBIP24.png" width=480>
 
 これで3色に色付けされることがわかりました。色分けをするにはカラム名を指定する必要があり、コードに事前定義するのが難しいので、ここでは一旦元のコードに戻します。
 
@@ -237,7 +237,7 @@ print(ggp, progress = F)
 
 6. 再び Power BI Service の画面にもどり、グラフを確認します。先ほど開発者向けビジュアルにデータを投入済みの方は画面の更新が完了するとともに GGally による SPLOM が表示されているはずです。まだデータを投入されていない方は、レポート上のビジュアルを選択後、表示したいデータ選択してください。例として以下のように SPLOM が表示されるはずです。
 
-<img src="img/PBIP16.png" width=480>
+<img src="img/PBIP25.png" width=480>
 
 
 ```
@@ -245,166 +245,236 @@ print(ggp, progress = F)
  done   RScript build complete
  ```
 
- これは `pbiviz` サーバーが自動的に変更を検知してビルドすることで開発効率を高める仕組みです。もし動作しない場合には先ほどの `package` コマンドを手動で実行し、サーバーを再起動してください。
+ R + Plotly の際と同様、 `pbiviz` サーバーが自動的に変更を検知してビルドし、サーバーが再起動します。ここで一番左のアイコンをクリックすると手動でリロードが可能ですが、細かく修正を行う場合には左から2番目の矢印付きのアイコンをクリックすると自動リロードモードになりますので、開発フェーズに合わせて設定を行ってください。
+
+<img src="img/PBIP26.png" width=120>
 
 ---
 
- 1. ここでダッシュボード上の「ビジュアル コードの再読み込み」をクリックします。ここでは3個のデータが必要にも関わらず2個のデータ（先ほどの状態であれば）しかないため、「ランタイムエラー」が発生しています。
+## 5. VSCの導入、準備
+ここから先は R 以外のコードも実施する必要があるため、R Studio は一旦ここで終了し、Visual Studio Code（以下VSC）を使用してコーディングを行っていきます。早速環境を整えましょう。
 
-<img src="img/PBIP03.png" width=240>
+1. [前回](https://github.com/c-nova/pbipltly)同様、VCSを起動します。お持ちでなければ[ここ](https://code.visualstudio.com/)からダウンロードして、インストールしてください。
+2. 今回はちゃんと？ R のコードを書く必要があるため VSC に R のプラグインを導入します。画面左端上部の最下部にある四角いアイコンをクリックするか、「Ctrl+Shift+X」を押下します。
+3. 「拡張機能」ウィンドウが表示されるので、最上部の検索ウィンドウで「R」と入力し、Enterを押下します。
+4. R とだけ書かれたパッケージが見つかると思いますので、クリックして拡張機能パッケージの画面を開きます。
 
-このエラーの対処方法は後ほど解説しますので、ここではもう一つの数値データを「Values」欄にドラッグ＆ドロップします。これで以下のように画面が変わるはずです。
+<img src="img/VSC21.png" width=480>
 
-<img src="img/PBIP04.png" width=480>
+5. 上手のようなパッケージであることを確認し、インストールをクリックします。画面上部にある「拡張機能の識別子」が「ikuyadeu.r」であることも念のため確認しておきましょう。
+6. インストールが完了したら「再読み込み」ボタンをクリックして再起動します。
+7. 「Usage」にも書いてあるように「R のパス」を指定します。「ファイル」->「基本設定」->「設定」の順に開くか、「Ctrl+,」を押下します。
+8. 設定画面が開くので、右側にある「ユーザー設定」の JSON 文字列に以下のように追記します。私の環境は Microsoft の Open R 3.5.0 を使用しておりますので以下のようになりますが、皆さんは自身の環境に合わせた内容で記述してください。
+
+`"r.rterm.windows": "C:\\Program Files\\Microsoft\\R Open\\R-3.5.0\\bin\\x64\\R.exe"`
+
+1行上の最後部に「,」を付与することを忘れないようにしましょう。
+追記後、以下のような記述になります。
+
+<img src="img/VSC22.png" width=480>
+
+9. 設定を有効化するためにVSCを再起動します。
+10. 再起動後、「ファイル」->「フォルダを開く」を開くか、「Ctrl+K -> Ctrl+O」を押下して先ほど作成したプロジェクト フォルダを開きます。
+11. 左側のペインに「エクスプローラー」が表示されるので、先ほど作成した「script.r」ファイルをクリックします。
+12. 画面上部にある下矢印付きアイコンをクリックするか、「Ctrl+Shift+S」を押下します。この操作により script.r 内のコードが全て実行されます。実行後、以下のような画面が別ウィンドウで表示されます。
+
+<img src="img/VSC23.png" width=240>
+<img src="img/VSC24.png" width=480>
+
+これでVSCの準備は完了です。
 
 ---
 
- 7. たった2行のコードを追加するだけで、簡単にグラフを変えることができました。しかし先ほどのエラーのように、3軸のデータが必要な場合にデータ数が少ないとエラーが表示されるのは問題ですので、以下のようなコードを追加してみましょう。
+## 6. Power BI の機能を利用して色をつける
+以前の章では R Studio では色のついたグラフが表示することができました。しかし R Studio での開発とは異なり、Power BI 上では定数を使ったカラムの指定を行うと毎回コードを変更する必要があり、非常に不便です。そこでこの章では Power BI の機能を利用して、ユーザーが自由にデータを投入して色を付けられるようにします。  
+
+1. データを投入する項目を管理しているのは「capability.json」というファイルになります。このファイルは初期状態では以下のようになっています。この内容を見てみましょう。
 
 ```
-source('./r_files/flatten_HTML.r')
-
-############### Library Declarations ###############
-libraryRequireInstall("ggplot2")
-libraryRequireInstall("plotly")
-####################################################
-
-####### Validate number of columns and rows ########
-pbiWarning <- NULL
-# filter out non-numeric columns and constant columns (Should be comment if not use column test)
-# correctColumn <- function(someColumn) { is.numeric(someColumn) && length(unique(someColumn)) > 1 }
-# useColumns <- sapply(Values,correctColumn)
-# if(sum(useColumns) < ncol(Values))
-#   pbiWarning <- "Filtered out non numeric columns and constant columns"
-# 
-# Values <- as.data.frame(Values[,useColumns])
-
-# filter out < 2 columns and < 2 columns
-columnCount <- ncol(Values)
-rowCount <- nrow(Values)
-
-if (rowCount < 2 || columnCount < 3) {
-  pbiWarning <- paste(pbiWarning, "<br><br>", "Not enough input dimensions");
-
-# Plot error message to ggplot and convert to Plotly
-  gg = ggplot()
-  gg = gg + labs (title = pbiWarning, caption = NULL) + theme_bw() +
-    theme(plot.title=element_text(hjust = 0.5, size = 20),
-          axis.title=element_text(size =  11),
-          axis.text=element_text(size =  8),
-          panel.border = element_blank())
-  p <- plotly_build(gg)
-  internalSaveWidget(p, 'out.html')
-  quit()
+{
+  "dataRoles": [
+    {
+      "displayName": "Values",
+      "kind": "GroupingOrMeasure",
+      "name": "Values"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "scriptResult": {
+        "dataInput": {
+          "table": {
+            "rows": {
+              "select": [
+                {
+                  "for": {
+                    "in": "Values"
+                  }
+                }
+              ],
+              "dataReductionAlgorithm": {
+                "top": {}
+              }
+            }
+          }
+        },
+～～ 中略 ～～
 }
-####################################################
+```
 
+入力データ項目を作成する上で注意が必要なのは、上記の「dataRoles」と「dataViewMappings」です。これはそれぞれ以下のような役割があります。
+
+|  | dataRoles | dataViewMappings |
+|:-|:---------:|:----------------:|
+|役割| 入力項目の名称や受け入れる値に制約を加える|入力項目数を制限したり、dataRoles で入力された値の処理方法を決定する
+|主な設定項目|表示名、ヒント文、受け入れデータ形式、内部名称|受け入れ最大/最小項目数、明細またはグループ化データの取り扱い方法|
+
+ここではどのようにデータを受け入れているかを確認できます。まず目につくのは「dataRoles」内の「Values」の項目です。これは Power BI 上で R を使用する際にデフォルトで用意されているデータ投入項目です。「Kind」の部分を見ると「GroupingOrMeasure」となっているので、グループ化用の値も、明細の値もどちらも受け入れ可能になっています。
+
+続いて「dataViewMappings」も見てみましょう。ここでも「Values」という値に注目しましょう。この項目は「scriptingResult」「dataInput」の下の「table」に格納されています。これは「table」というデータ処理機能を使用して「rows」に格納されることを意味します。簡単に言うとテーブル形式で行に格納されることになります。また「"for": { "in": 」を使用しているということで、集計、グループ化されず、そのままのデータを各行に入れるということになります。
+
+まとめると、デフォルトで用意されている「Values」というデータの受け入れ項目はどのようなデータ形式でも、個数も制限なく受け入れ、すべて明細で表現される、ということになります。
+
+ここでは全ての内容についての説明は難しいため、詳細は[公式の英語ページ](https://github.com/Microsoft/PowerBI-visuals/blob/master/Capabilities/Capabilities.md)か、[非公式の日本語ページ](https://qiita.com/kenakamu/items/46ae6e419c49284c75ed)をご覧のうえ、ご理解頂ければと思います。。
+
+2. それではまず、「dataRoles」について変更を行いましょう。以下のように既存の内容の変更と、追加の項目を記述します。
+
+```
+"dataRoles": [
+    {
+      "displayName": "値",
+      "description": "プロットする値を入力します。連続値、離散値が入力可能です",
+      "kind": "GroupingOrMeasure",
+      "name": "Values"
+    },
+    {
+      "displayName": "カラー",
+      "description": "プロットに色付けする値を入力します。離散値のみが入力可能です（15値まで）",
+      "kind": "GroupingOrMeasure",
+      "name": "ColorVal"
+    }
+  ],
+```
+最初に変更部分です。既存の「Values」という言葉も分かりにくいので「値」など日本語に変更できます。ただし変更するのは「displayName」のみで「name」は変更しないでください。こちらは内部で使用する名称となります。  
+また「descriptions」という項目を増やしました。これは「値」の欄でマウス ポイントをホバー（何もクリックせず上に置いてあるだけの状態）した際に表示されるバルーン ヘルプのようなものです。これで投入するデータの種類などに注意を与えられます。
+
+次にグラフに色付けを行うための項目を投入する「カラー」という部分を追記します。こちらも同様に「descriptsions」に注意事項を記入します。
+
+変更、追記が終わったらファイルを保存します。
+
+3. それでは早速どのように表示されるのか見てみましょう。統合コンソールが表示されていない場合には「表示」->「統合コンソール」をクリックするか、「Ctral+@」を押下します。もし前の章で R のコンソールを起動したままの場合は、コンソールに「quit()」と入力、実行して R のターミナルを閉じます。  
+準備ができたら以下のコマンドを実行して pbiviz サーバーを起動します。
+
+`pbiviz start`
+
+4. Power BI サービスの画面を開きます。以下のように「値」という項目と「カラー」という項目が表示されていれば問題なく動作していることになります（ただしまだロジックは入れておりませんのでカラー表示はできません）。
+
+<img src="img/VSC25.png" width=360>
+
+5. 続けて R のスクリプトにカラー化させる内容を記述してみましょう。以下の行を変更します。
+
+`ggp = ggpairs(Values)`
+
+以下の内容に変更します。R Studioの際にカラー化した際のコードを一部変更し、先ほど追加した「カラー」項目の内部名「ColorVal」にしました。
+
+`ggp = ggpairs(Values, mapping = aes(color = ColorVal))`
+
+6. これで実際に動作を見てみましょう。グラフを再読み込みしてみます。
+
+<img src="img/VSC26.png" width=360>
+
+どうやらエラーのようです。このように R でカスタム ビジュアルを開発する際にはエラー表示はプロット画面のみで表示されますのでご注意ください。詳細は「詳細を確認する」リンクをクリックします。
+
+<img src="img/VSC27.png" width=480>
+
+どうやら「aes」というファンクションが無いというエラーのようです。このように R Studio では表示されなかったエラーが表示されるということは、Power BI の R の処理が一般的な R と異なるということを示します。ここでは明示的に、
+
+`library("ggplot2")`
+
+という行を「Library Declarations」の部分に追記します。以下のようになっていれば問題ありません。
+
+```
+############### Library Declarations ###############
+#library("progress") <- This moduele not compatible PBI Service
+library("ggplot2")
+library("showtext")
+library("scales")
+library("colorspace")
+library("GGally")
+####################################################
+```
+
+この状態でスクリプトを保存します。
+
+7. それではもう一度再読み込みしてみましょう。恐らくもう一度エラーが表示されたかと思います。今度のエラー内容も見てみましょう。
+
+<img src="img/VSC28.png" width=480>
+
+これは「ColorVal」が無いため処理できないというエラーです。これは先ほど作成した「カラー」の項目に何も入っていないと起きるエラーです。早速何か離散値のデータを投入します。
+
+<img src="img/VSC29.png" width=480>
+
+データを投入するとまたエラーが発生します。このエラーは連続値のスケールに離散値のデータが入っているため ggplot2 で処理方法が判断できないというものです。このように一見単純なデータを投入しているつもりでも、Power BI 内では目に見えない処理が行われているため、内部的にデータを制限する必要があります。
+
+8. 早速コードを変更しましょう。「ColorVal」の最初のカラムだけを受け取り、別の変数に代入してみます。
+
+`graphColor = ColorVal[,1]`
+
+全体としては以下のようになっているはずです。
+
+```
 ################### Actual code ####################
-p = plot_ly(Values,
-            x = Values[,1],
-            y = Values[,2],
-            z = Values[,3],
-            type = "heatmap"
-)
-####################################################
-
-############# Create and save widget ###############
-internalSaveWidget(p, 'out.html')
+powerbi_rEnableShowTextForCJKLanguages =  1
+graphColor = ColorVal[,1]
+ggp = ggpairs(Values, mapping = aes(color = graphColor))
+print(ggp, progress = F)
 ####################################################
 ```
 
-ここでは「ggplot」が再び登場しているのがお分かりかと思います。これは Power BI が最終出力をグラフのオブジェクトしか受け取らないことと、Plotlyの出力内容に関係しています。もしエラーメッセージをそのままテキストで出力できれば特に何も問題ないのですが、Power BI では受け付けてくれません。また Plotly は様々なグラフを簡単に出力するには非常に良いのですが、例えば今回のエラーのように軸やデータを何も表示せずにテキストのみを表示することはできません。そのため今回 ggplot で出力した内容を更に `plotly_build` を使用して Plotly 形式のグラフとして出力しています。
-また R 標準の `plot` も、今回の RHTML 形式ではウィジェット保存ができないため、対応できません。
-もちろん軸やその他が表示されてもいいので、コードをなるべくシンプルにしたい場合には `Plotly` で記述しても動作します。
+それでは早速コードを保存して再読み込みしてみましょう。
 
-今回はセクションとして Validate number of columns and rows というコメントの部分を追加し、この中にコードを書きました。ブロックとしては、
+9. うまくカラー化できたようです。しかし途中のエラーからもわかるように、R のコードはそのまま使用してしまうとエラーばかり発生してしまうことになります。続けてエラー ハンドリングも行っていきましょう。
 
-- エラーメッセージの初期化
-- 数値カラム以外のカラムの削除とエラー表示設定
-- 特定の数値以下の行、列をエラーとする
-- エラーメッセージの出力
+<img src="img/VSC30.png" width=480>
 
-の4つで構成されています。今回は文字列カラムも使用するので2個目のブロックはコメント化しています。
-3つ目のブロックで3カラム未満の場合をエラーとしています。これはヒートマップは3次元のデータを必要としているからです。もしこれがヒストグラムであれば1未満、散布図であれば2未満というようにパラメータを変更する必要があります。
-最後のブロックで `quit()` でコードを終了させていることにも注意が必要です。もし終了しなかった場合、後続のコードが実行されるため、エラーが表示されることになります。
+10. ここで一旦エラー内容と対応内容を整理しましょう。
 
----
+|    項目    |              エラー内容               |
+|:-----------|:-------------------------------------|
+| 1. パッケージ | 依存関係のパッケージが自動的に呼び出されない |
+| 2. 追加データ | データが追加されていない時に、定義されていない変数でエラーが起きる |
+| 3. データ形式 | 投入データの中で明示的にカラムがしていされていない場合エラーが起きる時がある |
 
-8. それではこのコードを保存し、自動コンバートされたことを確認し、グラフをリロードしてみましょう。リロードが成功すると、特に先ほどと変わらない画面が表示されますので、データを1つ取り除きます。グラフが再度読み込まれ、以下のような画面に変わるはずです。
+この中で1と3番目は既にハンドリング済みなので、これから2番目の内容を対応しましょう。
 
-<img src="img/PBIP05.png" width=480>
+11. 変数の存在を確認するには `exists` という R の関数を使用します。例えば `ColorVal` という変数の存在を確認するには、
 
----
+`exists("ColorVal")`
 
-9. 再び取り除いたデータを戻し、元通り動作することも確認します。
-
-<img src="img/PBIP04.png" width=480>
-
----
-
-10. 動作確認が完了したら、このビジュアルをパッケージ化して Power BI Desktop でも使用できるようにしましょう。カスタム ビジュアルとしてちゃんと認識できるように、アイコンの設定をしましょう。カスタム ビジュアルで使用できるアイコンのサンプルが、
-
-`assets\icon.png`
-
-に配置されていますので、それを変更しましょう。ここでは以下のようなアイコンにしました。
-アイコンのサイズは 20x20 と非常に小さいので注意しましょう。
-
-<img src="img/PBIP06.png" width=20>
-
-同じ場所、同じ名前で png 形式で保存します。
-
----
-
-11. 保存が完了したら、パッケージ化を行います。以下のコマンドを実行してパッケージを作成します。
-
-`pbiviz package`
-
-問題が無ければ、以下のように表示されて完了します。
+とすることで確認が可能です。それではこの内容を早速コードに組み込んでみましょう。
 
 ```
- info   Building visual...
- done   packaging complete
+################### Actual code ####################
+powerbi_rEnableShowTextForCJKLanguages =  1
+
+if(exists("ColorVal")){
+    graphColor = ColorVal[,1]
+    ggp = ggpairs(Values, mapping = aes(color = graphColor))
+} else {
+    ggp = ggpairs(Values)
+}
+
+print(ggp, progress = F)
+####################################################
 ```
----
 
-12. パッケージ化されたファイルを確認しましょう。パッケージは以下の場所に格納されます。
+上記のように if 文に exists を組み込んで、ColorVal がある場合にはカラー、無い場合にはモノクロと分岐させるコードを記述します。  
+コードを記述したら保存します。
 
-`dist\<プロジェクト名>.pbiviz`
+12. この状態で Power BI Service で実行しましょう。グラフを再読み込みします。
 
-このファイルを Power BI Desktop で読み込み、動作を確認します。
 
----
 
-13. Power BI Desktop を起動します。もしお持ちでない方は Power BI の製品ページからダウンロードしてください。起動後、「視覚化」メニューから「カスタム ビジュアルのインポート」アイコンをクリックします（・・・というアイコンです）。
+## 7. Power BI のオプションを機能を使用してプロットを構成する
+前の章では色付け用のカラムを別に用意し、自由に色付けをできるようにしました。しかしこれだけでは GGally の利点である「グラフの種類を自由に組み合わせる」という機能が利用できません。ここでは Power BI のオプション機能を使用してプロットの構成を行えるようにします。
 
-<img src="img/PBIP07.png" width=480>
-
----
-
-14. メニューが開くので「ファイルからインポートする」をクリックします。「プライバシーに関するリスク」警告が表示される場合がありますので、内容を確認の上「インポート」をクリックします。
-
-<img src="img/PBIP08.png" width=240>
-
----
-
-15. 先ほどパッケージ化したファイルを選びます。正常にインポートされると「正常にインポートされました」という内容のダイアログが表示されます。
-
-<img src="img/PBIP09.png" width=240>
-
----
-
-16. 先ほど作成したアイコンでパッケージが追加されていることを確認します。
-
-<img src="img/PBIP10.png" width=480>
-
----
-
-17. Power BI Service での動作確認時と同じ動作が行われるか確認します。
-
-<img src="img/PBIP11.png" width=480>
-
----
-
-これで R と Plotly を使用したカスタム ビジュアルの作成は完了です。Microsoft 自体も様々な同様のカスタム ビジュアルを Github にて公開していますので、ビジュアル開発の一助にご利用頂ければと思います。
-
-[Microsoft の Github リポジトリ （R を利用したカスタム ビジュアルのみ）](https://github.com/search?l=R&q=microsoft%2Fpowerbi-visuals-&type=Repositories)
