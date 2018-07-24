@@ -568,9 +568,9 @@ var powerbi;
                 var PlotSettingsUpper = (function () {
                     function PlotSettingsUpper() {
                         this.ShowSw = true;
-                        this.Continuous = "point";
+                        this.Continuous = "points";
                         this.Combo = "box";
-                        this.Discrete = "ratio";
+                        this.Discrete = "facetbar";
                     }
                     return PlotSettingsUpper;
                 }());
@@ -578,9 +578,9 @@ var powerbi;
                 var PlotSettingsLower = (function () {
                     function PlotSettingsLower() {
                         this.ShowSw = true;
-                        this.Continuous = "point";
+                        this.Continuous = "points";
                         this.Combo = "box";
-                        this.Discrete = "ratio";
+                        this.Discrete = "facetbar";
                     }
                     return PlotSettingsLower;
                 }());

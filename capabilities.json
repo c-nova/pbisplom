@@ -91,7 +91,7 @@
             "enumeration": [
               {
                 "displayName": "ポイント",
-                "value": "point"
+                "value": "points"
               },
               {
                 "displayName": "スムース",
@@ -179,7 +179,7 @@
             "enumeration": [
               {
                 "displayName": "ポイント",
-                "value": "point"
+                "value": "points"
               },
               {
                 "displayName": "スムース",
@@ -290,7 +290,7 @@
               },
               {
                 "displayName": "なし",
-                "value": "blank"
+                "value": "blankDiag"
               }
             ]
           }

@@ -32,15 +32,15 @@ if(exists("PlotSettingsUpper_ShowSw")){
 #PBI_PARAM Show the Lower-Left plot area
 LshowSw = TRUE
 if(exists("PlotSettingsLower_ShowSw")){
-    UshowSw = PlotSettingsLower_ShowSw
+    LshowSw = PlotSettingsLower_ShowSw
 }
 #PBI_PARAM Show the Diagonal plot area
-DShowSw = TRUE
+DshowSw = TRUE
 if(exists("PlotSettingsDiag_ShowSw")){
-    DShowSw = PlotSettingsDiag_ShowSw
+    DshowSw = PlotSettingsDiag_ShowSw
 }
 #PBI_PARAM Setting for Continuous value on the Upper-Right plot area
-UCont = "point"
+UCont = "points"
 if(exists("PlotSettingsUpper_Continuous")){
     UCont = PlotSettingsUpper_Continuous
 }
@@ -50,61 +50,69 @@ if(exists("PlotSettingsUpper_Combo")){
     UCombo = PlotSettingsUpper_Combo
 }
 #PBI_PARAM Setting for Discrete value on the Upper-Right plot area
-UDisk = "box"
+UDisc = "facetbar"
 if(exists("PlotSettingsUpper_Discrete")){
-    UDisk = PlotSettingsUpper_Discrete
+    UDisc = PlotSettingsUpper_Discrete
 }
 #PBI_PARAM Setting for Continuous value on the Lower-Left plot area
-LCont = "point"
+LCont = "points"
 if(exists("PlotSettingsLower_Continuous")){
-    UCont = PlotSettingsLower_Continuous
+    LCont = PlotSettingsLower_Continuous
 }
 #PBI_PARAM Setting for Combination value on the Lower-Left plot area
 LCombo = "box"
 if(exists("PlotSettingsLower_Combo")){
-    UCombo = PlotSettingsLower_Combo
+    LCombo = PlotSettingsLower_Combo
 }
 #PBI_PARAM Setting for Discrete value on the Lower-Left plot area
-LDisk = "box"
+LDisc = "facetbar"
 if(exists("PlotSettingsLower_Discrete")){
-    UDisk = PlotSettingsLower_Discrete
+    LDisc = PlotSettingsLower_Discrete
 }
 #PBI_PARAM Setting for Continuous value on the Diagonal plot area
-DCont = "point"
+DCont = "densityDiag"
 if(exists("PlotSettingsDiag_Continuous")){
     DCont = PlotSettingsDiag_Continuous
 }
 #PBI_PARAM Setting for Discrete value on the Diagonal plot area
-DDisk = "box"
+DDisc = "barDiag"
 if(exists("PlotSettingsDiag_Discrete")){
-    DDisk = PlotSettingsDiag_Discrete
+    DDisc = PlotSettingsDiag_Discrete
 }
 
 if(exists("ColorVal")){
     graphColor = ColorVal[,1]
-    if((UshowSw == FALSE) && (DShowSw == FALSE)){
-        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = "blank", lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = "blank")
-    } else if((LshowSw == FALSE) && (DShowSw == FALSE)){
-        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = "blank", diag = "blank")
+    if((UshowSw == FALSE) && (LshowSw == FALSE) && (DshowSw == FALSE)){
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = "blank", lower = "blank", diag = "blank")
+    } else if((UshowSw == FALSE) && (DshowSw == FALSE)){
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = "blank", lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = "blank")
+    } else if((LshowSw == FALSE) && (DshowSw == FALSE)){
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = "blank", diag = "blank")
+    } else if((UshowSw == FALSE) && (LshowSw == FALSE)){
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = "blank", lower = "blank", diag = list(continuous = DCont, discrete = DDisc))
     } else if(UshowSw == FALSE){
-        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = "blank", lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = list(continuous = DCont, discrete = DDisk))
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = "blank", lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = list(continuous = DCont, discrete = DDisc))
     } else if(LshowSw == FALSE){
-        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = "blank", diag = list(continuous = DCont, discrete = DDisk))
-    } else if(DShowSw == FALSE) {
-        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = "blank")
-    } else ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = list(continuous = DCont, discrete = DDisk))
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = "blank", diag = list(continuous = DCont, discrete = DDisc))
+    } else if(DshowSw == FALSE) {
+        ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = "blank")
+    } else ggp = ggpairs(Values, mapping = aes(color = graphColor), upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = list(continuous = DCont, discrete = DDisc))
 } else {
-    if((UshowSw == FALSE) && (DShowSw == FALSE)){
-        ggp = ggpairs(Values, upper = "blank", lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = "blank")
-    } else if((LshowSw == FALSE) && (DShowSw == FALSE)){
-        ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = "blank", diag = "blank")
+    if((UshowSw == FALSE) && (LshowSw == FALSE) && (DshowSw == FALSE)){
+        ggp = ggpairs(Values, upper = "blank", lower = "blank", diag = "blank")
+    } else if((UshowSw == FALSE) && (DshowSw == FALSE)){
+        ggp = ggpairs(Values, upper = "blank", lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = "blank")
+    } else if((LshowSw == FALSE) && (DshowSw == FALSE)){
+        ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = "blank", diag = "blank")
+    } else if((UshowSw == FALSE) && (LshowSw == FALSE)){
+        ggp = ggpairs(Values, upper = "blank", lower = "blank", diag = list(continuous = DCont, discrete = DDisc))
     } else if(UshowSw == FALSE){
-        ggp = ggpairs(Values, upper = "blank", lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = list(continuous = DCont, discrete = DDisk))
+        ggp = ggpairs(Values, upper = "blank", lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = list(continuous = DCont, discrete = DDisc))
     } else if(LshowSw == FALSE){
-        ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = "blank", diag = list(continuous = DCont, discrete = DDisk))
-    } else if(DShowSw == FALSE) {
-        ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = "blank")
-    } else ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisk), lower = list(continuous = UCont, combo = UCombo, discrete = UDisk), diag = list(continuous = DCont, discrete = DDisk))
+        ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = "blank", diag = list(continuous = DCont, discrete = DDisc))
+    } else if(DshowSw == FALSE) {
+        ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = "blank")
+    } else ggp = ggpairs(Values, upper = list(continuous = UCont, combo = UCombo, discrete = UDisc), lower = list(continuous = LCont, combo = LCombo, discrete = LDisc), diag = list(continuous = DCont, discrete = DDisc))
 }
 
 print(ggp, progress = F)

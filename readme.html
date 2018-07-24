@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
+        <style>
+/*--------------------------------------------------------------------------------------------- * Copyright (c) Microsoft Corporation. All rights reserved. * Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/ body { font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback"; font-size: 14px; padding: 0 26px; line-height: 22px; word-wrap: break-word; } #code-csp-warning { position: fixed; top: 0; right: 0; color: white; margin: 16px; text-align: center; font-size: 12px; font-family: sans-serif; background-color:#444444; cursor: pointer; padding: 6px; box-shadow: 1px 1px 1px rgba(0,0,0,.25); } #code-csp-warning:hover { text-decoration: none; background-color:#007acc; box-shadow: 2px 2px 2px rgba(0,0,0,.25); } body.scrollBeyondLastLine { margin-bottom: calc(100vh - 22px); } body.showEditorSelection .code-line { position: relative; } body.showEditorSelection .code-active-line:before, body.showEditorSelection .code-line:hover:before { content: ""; display: block; position: absolute; top: 0; left: -12px; height: 100%; } body.showEditorSelection li.code-active-line:before, body.showEditorSelection li.code-line:hover:before { left: -30px; } .vscode-light.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(0, 0, 0, 0.15); } .vscode-light.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(0, 0, 0, 0.40); } .vscode-light.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-dark.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 255, 255, 0.4); } .vscode-dark.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 255, 255, 0.60); } .vscode-dark.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-high-contrast.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 160, 0, 0.7); } .vscode-high-contrast.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 160, 0, 1); } .vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before { border-left: none; } img { max-width: 100%; max-height: 100%; } a { text-decoration: none; } a:hover { text-decoration: underline; } a:focus, input:focus, select:focus, textarea:focus { outline: 1px solid -webkit-focus-ring-color; outline-offset: -1px; } hr { border: 0; height: 2px; border-bottom: 2px solid; } h1 { padding-bottom: 0.3em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; } h1, h2, h3 { font-weight: normal; } h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { font-size: inherit; line-height: auto; } table { border-collapse: collapse; } table > thead > tr > th { text-align: left; border-bottom: 1px solid; } table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table > tbody > tr > td { padding: 5px 10px; } table > tbody > tr + tr > td { border-top: 1px solid; } blockquote { margin: 0 7px 0 5px; padding: 0 16px 0 10px; border-left-width: 5px; border-left-style: solid; } code { font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"; font-size: 14px; line-height: 19px; } body.wordWrap pre { white-space: pre-wrap; } .mac code { font-size: 12px; line-height: 18px; } pre:not(.hljs), pre.hljs code > div { padding: 16px; border-radius: 3px; overflow: auto; } /** Theming */ pre code { color: var(--vscode-editor-foreground); } .vscode-light pre:not(.hljs), .vscode-light code > div { background-color: rgba(220, 220, 220, 0.4); } .vscode-dark pre:not(.hljs), .vscode-dark code > div { background-color: rgba(10, 10, 10, 0.4); } .vscode-high-contrast pre:not(.hljs), .vscode-high-contrast code > div { background-color: rgb(0, 0, 0); } .vscode-high-contrast h1 { border-color: rgb(0, 0, 0); } .vscode-light table > thead > tr > th { border-color: rgba(0, 0, 0, 0.69); } .vscode-dark table > thead > tr > th { border-color: rgba(255, 255, 255, 0.69); } .vscode-light h1, .vscode-light hr, .vscode-light table > tbody > tr + tr > td { border-color: rgba(0, 0, 0, 0.18); } .vscode-dark h1, .vscode-dark hr, .vscode-dark table > tbody > tr + tr > td { border-color: rgba(255, 255, 255, 0.18); } 
+</style>
+<style>
+/* Tomorrow Theme */ /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Original theme - https://github.com/chriskempson/tomorrow-theme */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }
+</style>
+<style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="r-%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B-power-bi-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%93%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E6%96%B9%E6%B3%95">R における Power BI カスタムビジュアルの作成方法</h1>
+<p><a href="https://github.com/c-nova/pbipltly">前回</a>は R + Plotly の組み合わせによるカスタム ビジュアルを作成しました。これは Plotly が「R スクリプト ビジュアル」で直接コードして可視化することができないため、カスタム ビジュアルのパッケージとして作成する必要がありました。
+しかし R の場合はどうでしょうか？ R の場合は「R スクリプト ビジュアル」が利用できるので、通常パッケージ化は必要ありません。ですが、これはあくまで R 言語を記述できる方が利用する場合の話であり、コーディングができない方では利用できないことに変わりはありません。また、Power BI Desktop では R スクリプトが利用できますが、現在Power BI Service では「R スクリプト ビジュアル」を利用することができません。
+そこで R スクリプトのパッケージ化が必要になります。パッケージ化を行うと、以下のような利点があります。</p>
+<ul>
+<li>毎回 R スクリプトを記述する必要がない</li>
+<li>パッケージ化されているので、組織内で統一されたコードでビジュアルが利用できる</li>
+<li>細かいパラメータの設定も GUI で設定可能</li>
+</ul>
+<p>今回の R でのカスタム ビジュアルは、上記の利点をフルに生かせるようなパッケージの作成方法を説明いたします。</p>
+<p><a href="https://github.com/c-nova/pbipltly">前回</a>と同じですが、Rについての日本語での解説は <a href="http://www.okadajp.org/RWiki/?R%E3%81%A8%E3%81%AF">こちら</a> のページをご覧ください。</p>
+<h2 id="1-power-bi-%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B-r-%E3%81%AE%E5%88%B6%E9%99%90%E4%BA%8B%E9%A0%85">1. Power BI における R の制限事項</h2>
+<p><a href="https://docs.microsoft.com/ja-jp/power-bi/desktop-r-visuals#known-limitations">このページ</a> に詳細が記載されていますが、Power BI Desktop で R を利用する場合には以下のような制限事項があります。Desktop 版と Service 版で若干制限事項が異なるので、両方ご利用される場合には厳しい制限に合わせる必要があります。Service 版の制限事項は<a href="https://docs.microsoft.com/ja-jp/power-bi/service-r-visuals#known-limitations">こちら</a>に記載されております。</p>
+<h3 id="power-bi-desktop%E3%80%81serivce-%E5%85%B1%E9%80%9A">Power BI Desktop、Serivce 共通</h3>
+<ul>
+<li>R ビジュアルは他のビジュアル同様、データ更新、フィルター処理、および強調表示の際に反映されます。これは毎回 R スクリプトが処理されることを意味します。</li>
+<li>R ビジュアルは対話的にクロス フィルター処理のソースになることはできません。これは Plotly を利用しても同様で、フィルタ処理のソースは Power BI ネイティブなスライダーなどをご利用ください。同様に R のビジュアル要素をクリックして選択することはできません（これは Plotly を利用する場合を除きます。ホバー ヒントなどを利用してポイントの数値を取得したい場合には、Plotly の採用を検討してください）</li>
+<li>R ビジュアルでプロット可能なデータ量は 150,000 行までとなります。150,000 行を超えた分は表示されず、プロット イメージ上に警告が表示されます</li>
+<li>コンソールと対話的な動きをするパッケージや、コンソールへの動作に介入する（例えば「progress」パッケージを使うなど）パッケージは動作できません</li>
+<li>日本語のカラム名は R では正常の動作しないことが多いので、英語のカラム名にすることをお勧めします。ただしどうしても日本語で表示を行いたいときには、以下の方法をお試しください</li>
+</ul>
+<ol>
+<li>R スクリプト内で library を定義する箇所に以下のパッケージを読み込む行を追加する</li>
+</ol>
+<p>Desktop の場合 <code>install.packages(&quot;showtext&quot;)</code>
+Service の場合 <code>library(&quot;showtext&quot;)</code></p>
+<ol start="2">
+<li>続けて Power BI で <code>showtext</code> が利用できるように以下の行を実コード部分の先頭に配置する</li>
+</ol>
+<p><code>powerbi_rEnableShowTextForCJKLanguages = 1</code></p>
+<h3 id="power-bi-desktop-%E3%81%A7%E3%81%AE%E5%88%B6%E9%99%90%E4%BA%8B%E9%A0%85">Power BI Desktop での制限事項</h3>
+<ul>
+<li>R での計算時間は 5 分までとなります。 5 分を超えるとエラーとなり、プロットできません</li>
+<li>R の既定のディスプレイ デバイスにプロットされるプロットだけが正しく表示されます。 異なる R ディスプレイ デバイスを明示的に使用することは避けてください。これは分かりにくいと思いますが、例えば「rggobi」のような、gtk+ を利用してインタラクティブにデータ探索を行えるモジュールがあります。これは gtk+ を利用して別ディスプレイ デバイスにデータを渡して処理を行います。このようなパッケージを Power BI 上で利用することはできません</li>
+<li>32bit 版 Power BI では R のインストール パスを手動で入力する必要があります（2018年7月現在）</li>
+</ul>
+<h3 id="power-bi-service%E3%81%A7%E3%81%AE%E5%88%B6%E9%99%90%E4%BA%8B%E9%A0%85">Power BI Serviceでの制限事項</h3>
+<ul>
+<li>利用できるパッケージは「CRAN」のような公式リポジトリに登録されている必要があります。最新の対応 R パッケージは<a href="https://docs.microsoft.com/ja-jp/power-bi/service-r-packages-support">こちら</a>から確認することが可能です。</li>
+<li>Power BI Service では R の計算時間は 60 秒までに制限されます。 60 秒を超えるとエラーとなり、プロットできません</li>
+<li>time データ型はサポートされません。Date/Time型をご利用ください</li>
+<li>「Web に公開」を使用するとき、R ビジュアルは表示されません</li>
+<li>2018年7月現在、R ビジュアルはダッシュボードとレポートの印刷機能では印刷されません</li>
+<li>2018年7月現在、R ビジュアルは Analysis Services の DirectQuery モードでサポートされていません</li>
+</ul>
+<h2 id="2-%E4%BD%9C%E6%A5%AD%E3%81%AE%E6%B5%81%E3%82%8C">2. 作業の流れ</h2>
+<p>作業の流れは前回とほとんど変わりません。ここでは環境ができている前提として以下の流れで進めていきます。</p>
+<ol>
+<li>pbibiz new でのプロジェクトの作成</li>
+<li>R によるコードの記述</li>
+<li>pbiviz start によるビジュアル サーバーの起動</li>
+<li>Power BI Service でのテスト実施</li>
+<li>pbiviz package によるパッケージに作成</li>
+<li>パッケージのインストール</li>
+</ol>
+<h2 id="3-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%83%93%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%AB-%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E4%BD%9C%E6%88%90">3. カスタム ビジュアル プロジェクトの作成</h2>
+<p>前回は RHTML テンプレートでの「カスタム ビジュアル プロジェクト」を作成しましたが、今回は R ビジュアルのテンプレートを利用します。</p>
+<p><code>pbiviz new &lt;プロジェクト名&gt; -t rvisual</code></p>
+<hr>
+<ol>
+<li>コマンド プロンプトを起動し、プロジェクトを作成するディレクトリ（プロジェクト用ディレクトリは自動作成されるので作成は不要です）に移動します。</li>
+</ol>
+<hr>
+<ol start="2">
+<li>以下の Node.js コマンドを実行します。今回はデフォルトの Power BI には無い「SPLOM」という複数の散布図（Scatter Plot）の集合体を作成します。ここでは名前は「pbisplom」とします。</li>
+</ol>
+<p><code>pbiviz new pbisplom -t rvisual</code></p>
+<p>実行が完了すると以下のように表示されます。</p>
+<pre><code> info   Creating new visual
+ info   Installing packages...
+ info   Installed packages.
+ done   Visual creation complete
+</code></pre>
+<hr>
+<ol start="3">
+<li>新しく作成されたディレクトリ（ここでは pbisplom ）に移動します。</li>
+</ol>
+<p><code>cd pbisplom</code></p>
+<hr>
+<ol start="4">
+<li>Visual Server を起動します。</li>
+</ol>
+<p><code>pbiviz start</code></p>
+<p>起動が成功すると以下のようなメッセージが表示され、待機状態になります。</p>
+<pre><code> info   Building visual...
+ done   build complete
+
+ info   Starting server...
+ info   Server listening on port 8080.
+</code></pre>
+<p>これで Power BI Service からカスタム ビジュアルを使用できるようになりました。
+作成後のファイル構成は以下のようになっているはずです。</p>
+<pre><code class="language-cmd:dir">.api
+.npmignore
+.vscode
+assets
+capabilities.json
+dependencies.json
+node_modules
+package-lock.json
+package.json
+pbiviz.json
+script.r
+src
+style
+tsconfig.json
+tslint.json
+</code></pre>
+<p>今回は <code>script.r</code> を編集していきます。</p>
+<hr>
+<ol start="5">
+<li>Power BI Service で適当なデータからレポートを作成します。サンプルからデータを取得しても構いませんし、作成済みのデータがあればそれを使用しても構いません。</li>
+</ol>
+<hr>
+<ol start="6">
+<li>空のレポートに対して下図にある「開発者向けビジュアル」をクリックします。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIS21.png" width=160>
+<hr>
+<ol start="7">
+<li>Plotly の場合とは異なり、データは組み込まれていないので、適当なデータをビジュアルに投入します。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIP21.png" width=480>
+<p>これで初期動作の確認は完了です。</p>
+<h2 id="4-%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E3%83%97%E3%83%AD%E3%83%83%E3%83%88">4. 基本的なプロット</h2>
+<p>ここから R のグラフを開発します。
+前回は VCS を使用して開発を行いましたが、最初の R のコーディング部分は R Studio を使用して開発を行います。R Studioは<a href="https://www.rstudio.com/products/rstudio/download/#download">こちら</a>からダウンロードし、インストールしてください。</p>
+<hr>
+<ol>
+<li>R Studio で 先ほど作成したプロジェクト内の script.r を開きます。以下のように表示されるはずです。</li>
+</ol>
+<pre><code>plot(Values);
+</code></pre>
+<p>R のみの場合は非常に単純です。前回同様データは「Values」という変数に代入されていることがわかります。
+plot は R のデフォルトのプロット命令です。実はこれでも SPLOM という形式の表示ができるのですが、あくまで散布図だけの対応なので、もっと色々なグラフが表示できるパッケージに変えていきましょう。</p>
+<hr>
+<ol start="2">
+<li>ここでは「<a href="https://ggobi.github.io/ggally/">GGally</a>」という SPLOM のパッケージを使用します。GGally は <a href="http://ggobi.org/foundation/">The GGobi Foundation, Inc</a> という団体が作成している ggplot2 の拡張機能です。もともと <a href="http://ggobi.org/">GGobi</a> 自体も高次元のデータの可視化や探索を得意とするソフトウェアであり、R で利用可能なパッケージ（rggoib）もあるのですが、こちらは GGobi と R を接続するためのパッケージでしかなく、今回の Power BI で使用方法の場合には利用することができません（別の画面が開いて実行される形式となり、Power BI ではサポートされません）。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIP22.png" width=480>
+GGobiを使ったデータ可視化例
+<p>以下に GGally を利用するためのコードを記載します。</p>
+<pre><code>################# DEBUG in RStudio #################
+setwd("C:/<WorkDir>")
+Values <- read.csv("<CSV Data File>", sep = ",")
+fileRda = "C:/Users/<UserName>/AppData/Local/Temp/tempData.Rda"
+if(file.exists(dirname(fileRda)))
+{
+ if(Sys.getenv("RSTUDIO")!="")
+   load(file= fileRda)
+ else
+   save(list = ls(all.names = TRUE), file=fileRda)
+}
+####################################################
+
+############### Library Declarations ###############
+library("showtext")
+#library("progress") <- This moduele not compatible PBI Service
+library("scales")
+library("colorspace")
+library("GGally")
+####################################################
+
+################### Actual code ####################
+powerbi_rEnableShowTextForCJKLanguages =  1
+ggp = ggpairs(Values)
+print(ggp, progress = F)
+####################################################
+</code></pre>
+<p>今回は DEBUG in RStudio の部分を利用します。本来は「fileRda」の部分以降がドキュメントで記載されている部分となりますが、一部使いにくい部分があるので2行ほど追加しています。1行目の <code>setwd</code> は作業ディレクトリの場所指定です。ここではコード、ファイルがある場所をしていします。2行目の <code>Values</code> は Power BI で読み込まれた際に指定される変数です。R Studio では事前に指定してデータを読み込む必要があります。
+3行目の <code>fileRDA</code> はそのディレクトリにあるファイル一覧をバイナリ形式で保存するもののようです。こちらは内部的に使用されるようですが、最初に R Studio で実行するとエラーが発生（この Rda ファイルを置くディレクトリが存在しないため）してしまうので、事前にディレクトリまでは作成しておきます。</p>
+<p>次に2個目の段落である Library Declarations を見てみましょう。一行目の <code>showtext</code> は Power BI で日本語カラムを使用する際に必要なライブラリです。2行目から5行目までが必要なライブラリですが、<code>progress</code> というライブラリは注意が必要です。これは重い処理を行う際にコンソール側に <code>=</code> 記号で進捗状況を表示するライブラリです。Power BI ではコンソール側で出力をや処理を行うパッケージはサポートされない（読み込もうとすると存在しないというエラーが発生する）ので、ここではコメントしておきます。</p>
+<p>そして最後の段落 Actual code です。こちらも一行目は CJK 言語（C:中国語、J:日本語、K:韓国語）で書かれたカラム名の処理についての記述です。
+2行目と3行目で一つのセットになって GGally の出力を形成していることに注意してください。2行目のみでも記述は可能なのですが、実は2行目だけで実行した場合、重い処理（15プロット以上 = 4x4の変数によるプロット以上の場合）を実行する際に先ほどの <code>progress</code> モジュールが要求されます。それを無効化しているのが3行目の <code>progress = F</code> の部分となります。</p>
+<hr>
+<ol start="3">
+<li>上記のコードを R Studio で実行してみましょう。プロットの画面に以下ようなグラフが表示されます。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIP23.png" width=480>
+<hr>
+<ol start="4">
+<li>上記のように、プロットはモノクロで表示されます。これでは味気ありませんので、特定のカラムのデータを利用して色付けしてみましょう。下記のコード例を利用して色で区分します。区分用のカラムは連続値データではなく、離散値データを利用しましょう</li>
+</ol>
+<p><code>ggp = ggpairs(Values, mapping = aes(colour = Values[,10]))</code></p>
+<p>上記では例として Values というデータの10個目のカラムを色付け用データとして利用しています。このデータは三段階の離散値を使用していますので、以下のような色付けになります。</p>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIP24.png" width=480>
+<p>これで3色に色付けされることがわかりました。色分けをするにはカラム名を指定する必要があり、コードに事前定義するのが難しいので、ここでは一旦元のコードに戻します。</p>
+<hr>
+<ol start="5">
+<li>コードを元に戻し、DEBUG in RStudio の部分をコメント化します。完了後保存し、以下のコマンドをコマンド プロンプトで実行します。</li>
+</ol>
+<p><code>pbiviz start</code></p>
+<hr>
+<ol start="6">
+<li>再び Power BI Service の画面にもどり、グラフを確認します。先ほど開発者向けビジュアルにデータを投入済みの方は画面の更新が完了するとともに GGally による SPLOM が表示されているはずです。まだデータを投入されていない方は、レポート上のビジュアルを選択後、表示したいデータ選択してください。例として以下のように SPLOM が表示されるはずです。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIP25.png" width=480>
+<pre><code> info   RScript change detected. Rebuilding...
+ done   RScript build complete
+</code></pre>
+<p>R + Plotly の際と同様、 <code>pbiviz</code> サーバーが自動的に変更を検知してビルドし、サーバーが再起動します。ここで一番左のアイコンをクリックすると手動でリロードが可能ですが、細かく修正を行う場合には左から2番目の矢印付きのアイコンをクリックすると自動リロードモードになりますので、開発フェーズに合わせて設定を行ってください。</p>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/PBIP26.png" width=120>
+<hr>
+<h2 id="5-vsc%E3%81%AE%E5%B0%8E%E5%85%A5%E3%80%81%E6%BA%96%E5%82%99">5. VSCの導入、準備</h2>
+<p>ここから先は R 以外のコードも実施する必要があるため、R Studio は一旦ここで終了し、Visual Studio Code（以下VSC）を使用してコーディングを行っていきます。早速環境を整えましょう。</p>
+<ol>
+<li><a href="https://github.com/c-nova/pbipltly">前回</a>同様、VCSを起動します。お持ちでなければ<a href="https://code.visualstudio.com/">ここ</a>からダウンロードして、インストールしてください。</li>
+<li>今回はちゃんと？ R のコードを書く必要があるため VSC に R のプラグインを導入します。画面左端上部の最下部にある四角いアイコンをクリックするか、「Ctrl+Shift+X」を押下します。</li>
+<li>「拡張機能」ウィンドウが表示されるので、最上部の検索ウィンドウで「R」と入力し、Enterを押下します。</li>
+<li>R とだけ書かれたパッケージが見つかると思いますので、クリックして拡張機能パッケージの画面を開きます。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC21.png" width=480>
+<ol start="5">
+<li>上手のようなパッケージであることを確認し、インストールをクリックします。画面上部にある「拡張機能の識別子」が「ikuyadeu.r」であることも念のため確認しておきましょう。</li>
+<li>インストールが完了したら「再読み込み」ボタンをクリックして再起動します。</li>
+<li>「Usage」にも書いてあるように「R のパス」を指定します。「ファイル」-&gt;「基本設定」-&gt;「設定」の順に開くか、「Ctrl+,」を押下します。</li>
+<li>設定画面が開くので、右側にある「ユーザー設定」の JSON 文字列に以下のように追記します。私の環境は Microsoft の Open R 3.5.0 を使用しておりますので以下のようになりますが、皆さんは自身の環境に合わせた内容で記述してください。</li>
+</ol>
+<p><code>&quot;r.rterm.windows&quot;: &quot;C:\\Program Files\\Microsoft\\R Open\\R-3.5.0\\bin\\x64\\R.exe&quot;</code></p>
+<p>1行上の最後部に「,」を付与することを忘れないようにしましょう。
+追記後、以下のような記述になります。</p>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC22.png" width=480>
+<ol start="9">
+<li>設定を有効化するためにVSCを再起動します。</li>
+<li>再起動後、「ファイル」-&gt;「フォルダを開く」を開くか、「Ctrl+K -&gt; Ctrl+O」を押下して先ほど作成したプロジェクト フォルダを開きます。</li>
+<li>左側のペインに「エクスプローラー」が表示されるので、先ほど作成した「script.r」ファイルをクリックします。</li>
+<li>画面上部にある下矢印付きアイコンをクリックするか、「Ctrl+Shift+S」を押下します。この操作により script.r 内のコードが全て実行されます。実行後、以下のような画面が別ウィンドウで表示されます。コンソールしか開かなかった場合には、もう一度同じ操作を実行します。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC23.png" width=240>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC24.png" width=480>
+<p>これでVSCの準備は完了です。</p>
+<hr>
+<h2 id="6-power-bi-%E3%81%AE%E6%A9%9F%E8%83%BD%E3%82%92%E5%88%A9%E7%94%A8%E3%81%97%E3%81%A6%E8%89%B2%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B">6. Power BI の機能を利用して色をつける</h2>
+<p>以前の章では R Studio では色のついたグラフが表示することができました。しかし R Studio での開発とは異なり、Power BI 上では定数を使ったカラムの指定を行うと毎回コードを変更する必要があり、非常に不便です。そこでこの章では Power BI の機能を利用して、ユーザーが自由にデータを投入して色を付けられるようにします。</p>
+<ol>
+<li>データを投入する項目を管理しているのは「capability.json」というファイルになります。このファイルは初期状態では以下のようになっています。この内容を見てみましょう。</li>
+</ol>
+<pre><code>{
+  "dataRoles": [
+    {
+      "displayName": "Values",
+      "kind": "GroupingOrMeasure",
+      "name": "Values"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "scriptResult": {
+        "dataInput": {
+          "table": {
+            "rows": {
+              "select": [
+                {
+                  "for": {
+                    "in": "Values"
+                  }
+                }
+              ],
+              "dataReductionAlgorithm": {
+                "top": {}
+              }
+            }
+          }
+        },
+～～ 中略 ～～
+}
+</code></pre>
+<p>入力データ項目を作成する上で注意が必要なのは、上記の「dataRoles」と「dataViewMappings」です。これはそれぞれ以下のような役割があります。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:center">dataRoles</th>
+<th style="text-align:center">dataViewMappings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">役割</td>
+<td style="text-align:center">入力項目の名称や受け入れる値に制約を加える</td>
+<td style="text-align:center">入力項目数を制限したり、dataRoles で入力された値の処理方法を決定する</td>
+</tr>
+<tr>
+<td style="text-align:left">主な設定項目</td>
+<td style="text-align:center">表示名、ヒント文、受け入れデータ形式、内部名称</td>
+<td style="text-align:center">受け入れ最大/最小項目数、明細またはグループ化データの取り扱い方法</td>
+</tr>
+</tbody>
+</table>
+<p>ここではどのようにデータを受け入れているかを確認できます。まず目につくのは「dataRoles」内の「Values」の項目です。これは Power BI 上で R を使用する際にデフォルトで用意されているデータ投入項目です。「Kind」の部分を見ると「GroupingOrMeasure」となっているので、グループ化用の値も、明細の値もどちらも受け入れ可能になっています。</p>
+<p>続いて「dataViewMappings」も見てみましょう。ここでも「Values」という値に注目しましょう。この項目は「scriptingResult」「dataInput」の下の「table」に格納されています。これは「table」というデータ処理機能を使用して「rows」に格納されることを意味します。簡単に言うとテーブル形式で行に格納されることになります。また「&quot;for&quot;: { &quot;in&quot;: 」を使用しているということで、集計、グループ化されず、そのままのデータを各行に入れるということになります。</p>
+<p>まとめると、デフォルトで用意されている「Values」というデータの受け入れ項目はどのようなデータ形式でも、個数も制限なく受け入れ、すべて明細で表現される、ということになります。</p>
+<p>ここでは全ての内容についての説明は難しいため、詳細は<a href="https://github.com/Microsoft/PowerBI-visuals/blob/master/Capabilities/Capabilities.md">公式の英語ページ</a>か、<a href="https://qiita.com/kenakamu/items/46ae6e419c49284c75ed">非公式の日本語ページ</a>をご覧のうえ、ご理解頂ければと思います。。</p>
+<hr>
+<ol start="2">
+<li>それではまず、「dataRoles」について変更を行いましょう。以下のように既存の内容の変更と、追加の項目を記述します。</li>
+</ol>
+<pre><code>"dataRoles": [
+    {
+      "displayName": "値",
+      "description": "プロットする値を入力します。連続値、離散値が入力可能です",
+      "kind": "GroupingOrMeasure",
+      "name": "Values"
+    },
+    {
+      "displayName": "カラー",
+      "description": "プロットに色付けする値を入力します。離散値のみが入力可能です（15値まで）",
+      "kind": "GroupingOrMeasure",
+      "name": "ColorVal"
+    }
+  ],
+</code></pre>
+<p>最初に変更部分です。既存の「Values」という言葉も分かりにくいので「値」など日本語に変更できます。ただし変更するのは「displayName」のみで「name」は変更しないでください。こちらは内部で使用する名称となります。<br>
+また「descriptions」という項目を増やしました。これは「値」の欄でマウス ポイントをホバー（何もクリックせず上に置いてあるだけの状態）した際に表示されるバルーン ヘルプのようなものです。これで投入するデータの種類などに注意を与えられます。</p>
+<p>次にグラフに色付けを行うための項目を投入する「カラー」という部分を追記します。こちらも同様に「descriptsions」に注意事項を記入します。ここでは内部名を「ColorVal」としました。</p>
+<hr>
+<ol start="3">
+<li>続けて追加した「ColorVal」のデータの取り扱いを追記しましょう。</li>
+</ol>
+<p>元のコードは以下のとおりです。</p>
+<pre><code>  "dataViewMappings": [
+    {
+      "scriptResult": {
+        "dataInput": {
+          "table": {
+            "rows": {
+              "select": [
+                {
+                  "for": {
+                    "in": "Values"
+                  }
+                }
+              ],
+～中略～
+    }
+  ],
+</code></pre>
+<p>ここに ColorVal 用の処理内容を追記します。</p>
+<pre><code>  "dataViewMappings": [
+    {
+      "scriptResult": {
+        "dataInput": {
+          "table": {
+            "rows": {
+              "select": [
+                {
+                  "for": {
+                    "in": "Values"
+                  }
+                },
+                {
+                  "for": {
+                    "in": "ColorVal"
+                  }
+                }
+              ],
+～中略～
+    }
+  ],
+</code></pre>
+<p>ここでは「for, in」という方式で「table」にデータを格納しています。「for, in」 はデータを明細のまま扱うことを示します。これ以外にも「bind, to」という1つのフィールドに制限する方式があります。詳細は <a href="https://github.com/Microsoft/PowerBI-visuals/blob/master/Capabilities/DataViewMappings.md">DataViewMappingsの説明ページ</a> をご覧ください。</p>
+<p>変更、追記が終わったらファイルを保存します。</p>
+<hr>
+<ol start="4">
+<li>それでは早速どのように表示されるのか見てみましょう。統合コンソールが表示されていない場合には「表示」-&gt;「統合コンソール」をクリックするか、「Ctral+@」を押下します。もし前の章で R のコンソールを起動したままの場合は、コンソールに「quit()」と入力、実行して R のターミナルを閉じます。<br>
+準備ができたら以下のコマンドを実行して pbiviz サーバーを起動します。</li>
+</ol>
+<p><code>pbiviz start</code></p>
+<hr>
+<ol start="5">
+<li>Power BI サービスの画面を開きます。以下のように「値」という項目と「カラー」という項目が表示されていれば問題なく動作していることになります（ただしまだロジックは入れておりませんのでカラー表示はできません）。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC25.png" width=360>
+<hr>
+<ol start="6">
+<li>続けて R のスクリプトにカラー化させる内容を記述してみましょう。「script.r」ファイルを開き、以下の行を変更します。</li>
+</ol>
+<p><code>ggp = ggpairs(Values)</code></p>
+<p>以下の内容に変更します。R Studioの際にカラー化した際のコードを一部変更し、先ほど追加した「カラー」項目の内部名「ColorVal」にしました。</p>
+<p><code>ggp = ggpairs(Values, mapping = aes(color = ColorVal))</code></p>
+<hr>
+<ol start="7">
+<li>これで実際に動作を見てみましょう。グラフを再読み込みしてみます。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC26.png" width=360>
+<p>どうやらエラーのようです。このように R でカスタム ビジュアルを開発する際にはエラー表示はプロット画面のみで表示されますのでご注意ください。詳細は「詳細を確認する」リンクをクリックします。</p>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC27.png" width=480>
+<p>どうやら「aes」というファンクションが無いというエラーのようです。このように R Studio では表示されなかったエラーが表示されるということは、Power BI の R の処理が一般的な R と異なるということを示します。ここでは明示的に、</p>
+<p><code>library(&quot;ggplot2&quot;)</code></p>
+<p>という行を「Library Declarations」の部分に追記します。以下のようになっていれば問題ありません。</p>
+<pre><code>############### Library Declarations ###############
+#library("progress") <- This moduele not compatible PBI Service
+library("ggplot2")
+library("showtext")
+library("scales")
+library("colorspace")
+library("GGally")
+####################################################
+</code></pre>
+<p>この状態でスクリプトを保存します。</p>
+<hr>
+<ol start="8">
+<li>それではもう一度再読み込みしてみましょう。恐らくもう一度エラーが表示されたかと思います。今度のエラー内容も見てみましょう。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC28.png" width=480>
+<p>これは「ColorVal」が無いため処理できないというエラーです。これは先ほど作成した「カラー」の項目に何も入っていないと起きるエラーです。早速何か離散値のデータを投入します。</p>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC29.png" width=480>
+<p>データを投入しましたが、またエラーが発生しました。このエラーは連続値のスケールに離散値のデータが入っているため ggplot2 で処理方法が判断できないというものです。このように一見単純なデータを投入しているつもりでも、Power BI 内では目に見えない処理が行われているため、内部的にデータを制限する必要があります。</p>
+<hr>
+<ol start="9">
+<li>早速コードを変更しましょう。「ColorVal」の最初のカラムだけを受け取り、別の変数に代入してみます。</li>
+</ol>
+<p><code>graphColor = ColorVal[,1]</code></p>
+<p>全体としては以下のようになっているはずです。</p>
+<pre><code>################### Actual code ####################
+powerbi_rEnableShowTextForCJKLanguages =  1
+graphColor = ColorVal[,1]
+ggp = ggpairs(Values, mapping = aes(color = graphColor))
+print(ggp, progress = F)
+####################################################
+</code></pre>
+<p>それでは早速コードを保存して再読み込みしてみましょう。</p>
+<hr>
+<ol start="10">
+<li>うまくカラー化できたようです。しかし途中のエラーからもわかるように、R のコードはそのまま使用してしまうとエラーばかり発生してしまうことになります。続けてエラー ハンドリングも行っていきましょう。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC30.png" width=480>
+<hr>
+<ol start="11">
+<li>ここで一旦エラー内容と対応内容を整理しましょう。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">項目</th>
+<th style="text-align:left">エラー内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1. パッケージ</td>
+<td style="text-align:left">依存関係のパッケージが自動的に呼び出されない</td>
+</tr>
+<tr>
+<td style="text-align:left">2. 追加データ</td>
+<td style="text-align:left">データが追加されていない時に、定義されていない変数でエラーが起きる</td>
+</tr>
+<tr>
+<td style="text-align:left">3. データ形式</td>
+<td style="text-align:left">投入データの中で明示的にカラムがしていされていない場合エラーが起きる時がある</td>
+</tr>
+</tbody>
+</table>
+<p>この中で1と3番目は既にハンドリング済みなので、これから2番目の内容を対応しましょう。</p>
+<hr>
+<ol start="12">
+<li>変数の存在を確認するには <code>exists</code> という R の関数を使用します。例えば <code>ColorVal</code> という変数の存在を確認するには、</li>
+</ol>
+<p><code>exists(&quot;ColorVal&quot;)</code></p>
+<p>とすることで確認が可能です。それではこの内容を早速コードに組み込んでみましょう。</p>
+<pre><code>################### Actual code ####################
+powerbi_rEnableShowTextForCJKLanguages =  1
+
+if(exists("ColorVal")){
+    graphColor = ColorVal[,1]
+    ggp = ggpairs(Values, mapping = aes(color = graphColor))
+} else {
+    ggp = ggpairs(Values)
+}
+
+print(ggp, progress = F)
+####################################################
+</code></pre>
+<p>上記のように if 文に exists を組み込んで、ColorVal がある場合にはカラー、無い場合にはモノクロと分岐させるコードを記述します。<br>
+コードを記述したら保存します。</p>
+<hr>
+<ol start="13">
+<li>この状態で Power BI Service で実行しましょう。グラフを再読み込みします。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC30.png" width=480>
+<p>先ほどと同じ状態になれば、まずは問題なくコードが動作しているようです。</p>
+<hr>
+<ol start="14">
+<li>次は「カラー」の項目からデータを除去しましょう。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC31.png" width=480>
+<p>無事にモノクロになりました。これで無用なエラー画面が表示されずに済みそうです。ただし投入されたデータがグラフと合わない場合などのエラーは発生しますので、必要に応じてエラー ハンドリングを行いましょう。</p>
+<hr>
+<h2 id="7-power-bi-%E3%81%AE%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E6%A9%9F%E8%83%BD%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%A6%E3%83%97%E3%83%AD%E3%83%83%E3%83%88%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B">7. Power BI のオプションを機能を使用してプロットを構成する</h2>
+<p>前の章では色付け用のカラムを別に用意し、自由に色付けをできるようにしました。しかしこれだけでは GGally の利点である「グラフの種類を自由に組み合わせる」という機能が利用できません。ここでは Power BI のオプション機能を使用してプロットの構成を行えるようにします。</p>
+<h3 id="%E3%83%8F%E3%83%BC%E3%83%89-%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%99%E3%82%8B%E3%81%8B%E3%80%81%E9%81%B8%E6%8A%9E%E5%8F%AF%E8%83%BD%E3%81%AB%E3%81%99%E3%82%8B%E3%81%8B">ハード コードにするか、選択可能にするか</h3>
+<p>先ほど「自由に組み合わせる」といいましたが、実は自由に組み合わせることができる = ユーザーが使いやすいとは限りません。もちろんコーディングで値を指定するよりも「選択」するだけで高度な可視化が行えることが望ましいのも事実ですが、自由度を持たせる余りに安定度が低下したり（すぐにエラー画面が表示されるなど）、選択肢が多すぎて逆に何を選択して良いかわからない、または複雑なく組み合わせで開発者も結果が予測できなくなっては本末転倒です。<br>
+そこで今回は数あるオプション（例えば <a href="http://ggobi.github.io/ggally/#ggallyggmatrix">'vignette for ggmatrix'</a> のような）はデフォルトのままで使用せず、右上、斜め、左下部分でのプロット方法の変更だけを選択だけで変更するようにしてみましょう。</p>
+<hr>
+<ol>
+<li>オプションの選択は先ほどと同様に「capabilities.json」ファイルに対して行います。先ほどは「dataRoles」と「dataViewMappings」という部分を変更しましたが、今回は「objects」という部分を変えていきます。元の状態を確認してみましょう。</li>
+</ol>
+<pre><code>  "objects": {
+    "rcv_script": {
+      "properties": {
+        "provider": {
+          "type": {
+            "text": true
+          }
+        },
+        "source": {
+          "type": {
+            "scripting": {
+              "source": true
+            }
+          }
+        }
+      }
+    }
+  },
+</code></pre>
+<p>このように、rcv_scripts という項目が事前に定義されています。この定義がどのようになっているのか実際の画面で見てみましょう。</p>
+<hr>
+<ol start="2">
+<li>Power BI サービスの画面を開きます。「視覚化」メニューの下に値を投入するダイアログが表示されていますが、中段の「ペンキ ローラー」アイコンをクリックするとプロパティを設定するダイアログが表示されます。クリックすると以下のように表示されるはずです。</li>
+</ol>
+<img src="file:///c%3A/opt/sandbox/pbisplom/img/VSC32.png" width=480>
+<p>このように、先ほど objects で設定されていた個所が最上段に表示されているかと思います。従って objects にパラメータを設定する箇所を指定することで、このダイヤログを使用して様々なパラメータが設定できることになります。</p>
+<hr>
+<ol start="3">
+<li>実際にパラメータを設定する領域を作成する前に、どのようなパラメータが設定可能か確認しましょう。objects は、<a href="https://github.com/Microsoft/PowerBI-visuals/blob/master/Capabilities/Objects.md">ここ</a>から詳細を確認することができます。</li>
+</ol>
+<p>ここでも説明されておりますが、Objects は可視化にかかわるカスタマイズ可能なプロパティを割り当てるための記述です。通常は以下のような記述にになります。</p>
+<pre><code>"objects": {
+    "myCustomObject": {
+        "displayName": "My Object Name",
+        "properties": { ... }
+    }
+}
+</code></pre>
+<p>このように、先ほどの dataRoles と同様に表示名がありますが、変数として利用可能な内部名は、ここでは「myCustomObject」となります。また「properties」という項目があるのがお分かりかと思いますが、ここに実際のパラメータをセットする項目を記述します。セット可能な形式は以下のとおりです。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">記述子形式</th>
+<th style="text-align:left">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">text</td>
+<td style="text-align:center">Value</td>
+<td style="text-align:left">テキスト形式のパラメータ</td>
+</tr>
+<tr>
+<td style="text-align:center">numeric</td>
+<td style="text-align:center">Value</td>
+<td style="text-align:left">値型のパラメータ</td>
+</tr>
+<tr>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">Value</td>
+<td style="text-align:left">整数型のパラメータ</td>
+</tr>
+<tr>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">Value</td>
+<td style="text-align:left">ブーリアン パラメータ</td>
+</tr>
+<tr>
+<td style="text-align:center">fill</td>
+<td style="text-align:center">Structual</td>
+<td style="text-align:left">カラー ピッカー</td>
+</tr>
+<tr>
+<td style="text-align:center">enumeration</td>
+<td style="text-align:center">Structual</td>
+<td style="text-align:left">パラメータ選択</td>
+</tr>
+</tbody>
+</table>
+<p>ほとんどのプロパティはそのままの意味ですが、fill はカラー ピッカーを使用できる唯一のプロパティです。また Objects のページに説明はないのですが、enumeration というプロパティを使用するとドロップダウン形式のメニューを作成することが可能になります。今回はこの中で bool と enumeration を使用してパラメータを設定していきます。</p>
+<hr>
+<ol start="4">
+<li>次に GGally で設定する必要のあるパラメータを確認しましょう。GGally のパラメータ一覧は<a href="http://ggobi.github.io/ggally/#matrix_sections">こちら</a>にあります。</li>
+</ol>
+<p>このページを見るとわかるのは、</p>
+<ul>
+<li>表示領域は <code>lower</code> <code>upper</code> <code>diag</code> の3つ</li>
+<li>使用可能なデータ形式は <code>continuous</code> <code>combo</code> <code>discrete</code> の3種類</li>
+<li>それぞれの領域で利用可能な組み合わせは異なるが、<code>points</code> <code>smooth</code> <code>density</code> <code>cor</code> <code>blank</code> <code>barDiag</code> <code>box</code> <code>dot</code> <code>facethist</code> <code>facetdensity</code> <code>denstrip</code> <code>ratio</code> <code>faacetbar</code> の13個の表示形式</li>
+</ul>
+<p>が利用可能ということになります（ここでは mapping は特殊なので説明を省きます）。ここで設定例を見ると、</p>
+<pre><code>library(ggplot2)
+pm <- ggpairs(
+  tips, columns = c("total_bill", "time", "tip"),
+  lower = list(
+    continuous = "smooth",
+    combo = "facetdensity",
+    mapping = aes(color = time)
+  )
+)
+pm
+</code></pre>
+<p>lower（左下のグラフ表示領域）の <code>continuous</code> では <code>smooth</code>、<code>combo</code> では <code>facetdensity</code> の形式で可視化を行うことになります。<code>mapping</code> は特殊なパラメータで、<code>ggplot</code> に対して直接色付けすることを命令する（aes を介して）というもので、これは前の章の色付けの際に付与したパラメータです。</p>
+<pre class="hljs"><code><div>  tips, columns = c(<span class="hljs-string">"total_bill"</span>, <span class="hljs-string">"time"</span>, <span class="hljs-string">"tip"</span>),
+  upper = <span class="hljs-string">"blank"</span>,
+  diag = NULL
+)
+pm
+</div></code></pre>
+<p>もう一つの例も見てみましょう。<code>upper</code> と <code>diag</code> がそれぞれ <code>blank</code> <code>NULL</code> を設定しています。これは「右上」と「斜め」の領域を「非表示」にする設定です。</p>
+
+    </body>
+    </html>

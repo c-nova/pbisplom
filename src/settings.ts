@@ -44,16 +44,16 @@ module powerbi.extensibility.visual {
 
     export class PlotSettingsUpper {
       public ShowSw: boolean = true;
-      public Continuous: string = "point";
+      public Continuous: string = "points";
       public Combo: string = "box";
-      public Discrete: string = "ratio";
+      public Discrete: string = "facetbar";
     }
 
     export class PlotSettingsLower {
       public ShowSw: boolean = true;
-      public Continuous: string = "point";
+      public Continuous: string = "points";
       public Combo: string = "box";
-      public Discrete: string = "ratio";
+      public Discrete: string = "facetbar";
     }
 
     export class PlotSettingsDiag {
